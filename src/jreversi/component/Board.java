@@ -10,6 +10,7 @@ public class Board implements IBoard {
 
   private final Point point;
   private final Stone[][] board;
+  private Stone turn;
 
   public Board(int x, int y) {
     this.point = new Point(x, y);
@@ -43,15 +44,24 @@ public class Board implements IBoard {
 
   @Override
   public void init() {
+    // Initialize board state.
     for (int y = 0; y < rows(); y++) {
       for (int x = 0; x < columns(); x++) {
         this.board[y][x] = Stone.NONE;
       }
     }
-    put(Stone.WHITE, 3, 3);
-    put(Stone.BLACK, 3, 4);
-    put(Stone.BLACK, 4, 3);
-    put(Stone.WHITE, 4, 4);
+    this.board[3][3] = Stone.WHITE;
+    this.board[3][4] = Stone.BLACK;
+    this.board[4][3] = Stone.BLACK;
+    this.board[4][4] = Stone.WHITE;
+
+    // Initialize turn.
+    this.turn = Stone.BLACK;
+  }
+
+  @Override
+  public Stone currentTurn() {
+    return turn;
   }
 
   @Override
@@ -60,8 +70,8 @@ public class Board implements IBoard {
   }
 
   @Override
-  public void put(Stone stone, int x, int y) {
-    board[y][x] = stone;
+  public void put(int x, int y) {
+    board[y][x] = currentTurn();
   }
 
   @Override

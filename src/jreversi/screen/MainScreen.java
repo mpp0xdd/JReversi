@@ -5,7 +5,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import jglib.component.GameScreen;
 import jreversi.common.IBoard;
-import jreversi.common.Stone;
 import jreversi.component.Board;
 
 public class MainScreen extends GameScreen implements MouseListener {
@@ -32,7 +31,7 @@ public class MainScreen extends GameScreen implements MouseListener {
   public void mouseClicked(MouseEvent e) {
     int cx = e.getX() / board.squareSize();
     int cy = e.getY() / board.squareSize();
-    board.put(Stone.BLACK, cx, cy);
+    board.put(cx, cy);
     repaint();
   }
 
