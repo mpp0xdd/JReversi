@@ -64,6 +64,10 @@ public class Board implements IBoard {
     return turn;
   }
 
+  private void changeTurn() {
+    this.turn = turn.flip();
+  }
+
   @Override
   public Stone get(int x, int y) {
     return board[y][x];
@@ -72,6 +76,7 @@ public class Board implements IBoard {
   @Override
   public void put(int x, int y) {
     board[y][x] = currentTurn();
+    changeTurn();
   }
 
   @Override
