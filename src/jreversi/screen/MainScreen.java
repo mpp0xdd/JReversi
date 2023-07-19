@@ -29,8 +29,8 @@ public class MainScreen extends GameScreen implements MouseListener {
 
   @Override
   public void mouseClicked(MouseEvent e) {
-    int cx = e.getX() / board.squareSize();
-    int cy = e.getY() / board.squareSize();
+    int cx = (e.getX() - board.getLocation().x) / board.squareSize();
+    int cy = (e.getY() - board.getLocation().y) / board.squareSize();
     board.putStone(cx, cy);
     repaint();
   }
