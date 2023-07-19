@@ -80,9 +80,13 @@ public class Board implements IBoard {
 
   @Override
   public void putStone(int x, int y) {
+    putStoneImpl(x, y, true);
+  }
+
+  private boolean putStoneImpl(int x, int y, boolean putStone) {
     final Point cursor = new Point(x, y);
     if (getStone(cursor) != Stone.NONE) {
-      return;
+      return false;
     }
 
     for (Direction direction : Direction.values()) {
@@ -107,6 +111,9 @@ public class Board implements IBoard {
           continue;
         }
         assert getStone(cursor) == currentStone();
+        if (!putStone) {
+          return true;
+        }
 
         board[y][x] = currentStone();
         cursor.translate(-direction.X, -direction.Y);
@@ -120,7 +127,13 @@ public class Board implements IBoard {
 
     if (getStone(x, y) == currentStone()) {
       this.currentStone = currentStone().flip();
+      return true;
     }
+    return false;
+  }
+
+  private boolean canPutStone(int x, int y) {
+    return putStoneImpl(x, y, false);
   }
 
   @Override
@@ -129,7 +142,7 @@ public class Board implements IBoard {
   }
 
   private void drawSquare(Graphics g, int x, int y) {
-    g.setColor(ColorFactory.green());
+    g.setColor(canPutStone(x, y) ? ColorFactory.khaki() : ColorFactory.green());
     g.fill3DRect(
         point.x + x * squareSize(), point.y + y * squareSize(), squareSize(), squareSize(), false);
   }

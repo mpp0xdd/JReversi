@@ -9,11 +9,16 @@ public final class ColorFactory {
   }
 
   private static final Color GREEN = new Color(0, 158, 11);
+  private static final Color KHAKI = new Color(240, 230, 140);
   private static final Color BLACK = Color.BLACK;
   private static final Color WHITE = Color.WHITE;
 
   public static Color green() {
     return GREEN;
+  }
+
+  public static Color khaki() {
+    return KHAKI;
   }
 
   public static Color black() {
