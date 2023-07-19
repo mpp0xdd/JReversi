@@ -2,6 +2,7 @@ package jreversi.component;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import jreversi.common.Direction;
 import jreversi.common.IBoard;
 import jreversi.common.Stone;
 import jreversi.resource.ColorFactory;
@@ -68,15 +69,62 @@ public class Board implements IBoard {
     this.turn = turn.flip();
   }
 
+  private boolean isInRange(Point p) {
+    return (0 <= p.x && p.x < columns()) && (0 <= p.y && p.y < rows());
+  }
+
   @Override
   public Stone get(int x, int y) {
     return board[y][x];
   }
 
+  private Stone get(Point p) {
+    return get(p.x, p.y);
+  }
+
   @Override
   public void put(int x, int y) {
-    board[y][x] = currentTurn();
-    changeTurn();
+    final Point cursor = new Point(x, y);
+    if (get(cursor) != Stone.NONE) {
+      return;
+    }
+
+    for (Direction direction : Direction.values()) {
+      cursor.setLocation(x, y);
+      cursor.translate(direction.X, direction.Y);
+      if (!isInRange(cursor)) {
+        continue;
+      }
+      if (get(cursor) != currentTurn().flip()) {
+        continue;
+      }
+
+      while (isInRange(cursor)) {
+        cursor.translate(direction.X, direction.Y);
+        if (!isInRange(cursor)) {
+          break;
+        }
+        if (get(cursor) == Stone.NONE) {
+          break;
+        }
+        if (get(cursor) == currentTurn().flip()) {
+          continue;
+        }
+        assert get(cursor) == currentTurn();
+
+        board[y][x] = currentTurn();
+        cursor.translate(-direction.X, -direction.Y);
+        while (cursor.x != x || cursor.y != y) {
+          board[cursor.y][cursor.x] = board[cursor.y][cursor.x].flip();
+          cursor.translate(-direction.X, -direction.Y);
+        }
+        break;
+      }
+    }
+
+    if (get(x, y) == currentTurn()) {
+      changeTurn();
+    }
   }
 
   @Override
