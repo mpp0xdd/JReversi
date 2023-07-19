@@ -11,7 +11,7 @@ public class Board implements IBoard {
 
   private final Point point;
   private final Stone[][] board;
-  private Stone turn;
+  private Stone currentStone;
 
   public Board(int x, int y) {
     this.point = new Point(x, y);
@@ -57,16 +57,12 @@ public class Board implements IBoard {
     this.board[4][4] = Stone.WHITE;
 
     // Initialize turn.
-    this.turn = Stone.BLACK;
+    this.currentStone = Stone.BLACK;
   }
 
   @Override
-  public Stone currentTurn() {
-    return turn;
-  }
-
-  private void changeTurn() {
-    this.turn = turn.flip();
+  public Stone currentStone() {
+    return currentStone;
   }
 
   private boolean isInRange(Point p) {
@@ -74,18 +70,18 @@ public class Board implements IBoard {
   }
 
   @Override
-  public Stone get(int x, int y) {
+  public Stone getStone(int x, int y) {
     return board[y][x];
   }
 
-  private Stone get(Point p) {
-    return get(p.x, p.y);
+  private Stone getStone(Point p) {
+    return getStone(p.x, p.y);
   }
 
   @Override
-  public void put(int x, int y) {
+  public void putStone(int x, int y) {
     final Point cursor = new Point(x, y);
-    if (get(cursor) != Stone.NONE) {
+    if (getStone(cursor) != Stone.NONE) {
       return;
     }
 
@@ -95,7 +91,7 @@ public class Board implements IBoard {
       if (!isInRange(cursor)) {
         continue;
       }
-      if (get(cursor) != currentTurn().flip()) {
+      if (getStone(cursor) != currentStone().flip()) {
         continue;
       }
 
@@ -104,15 +100,15 @@ public class Board implements IBoard {
         if (!isInRange(cursor)) {
           break;
         }
-        if (get(cursor) == Stone.NONE) {
+        if (getStone(cursor) == Stone.NONE) {
           break;
         }
-        if (get(cursor) == currentTurn().flip()) {
+        if (getStone(cursor) == currentStone().flip()) {
           continue;
         }
-        assert get(cursor) == currentTurn();
+        assert getStone(cursor) == currentStone();
 
-        board[y][x] = currentTurn();
+        board[y][x] = currentStone();
         cursor.translate(-direction.X, -direction.Y);
         while (cursor.x != x || cursor.y != y) {
           board[cursor.y][cursor.x] = board[cursor.y][cursor.x].flip();
@@ -122,8 +118,8 @@ public class Board implements IBoard {
       }
     }
 
-    if (get(x, y) == currentTurn()) {
-      changeTurn();
+    if (getStone(x, y) == currentStone()) {
+      this.currentStone = currentStone().flip();
     }
   }
 
@@ -139,7 +135,7 @@ public class Board implements IBoard {
   }
 
   private void drawStone(Graphics g, int x, int y) {
-    switch (get(x, y)) {
+    switch (getStone(x, y)) {
       default:
       case NONE:
         return;

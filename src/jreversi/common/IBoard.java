@@ -23,11 +23,11 @@ public interface IBoard {
 
   void init();
 
-  Stone currentTurn();
+  Stone currentStone();
 
-  Stone get(int x, int y);
+  Stone getStone(int x, int y);
 
-  void put(int x, int y);
+  void putStone(int x, int y);
 
   Point getLocation();
 
