@@ -1,31 +1,30 @@
 package jreversi.screen;
 
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import jglib.component.GameScreen;
-import jglib.util.GameUtilities;
 import jreversi.common.IBoard;
+import jreversi.common.StatusBarBase;
 import jreversi.component.Board;
+import jreversi.component.StatusBar;
 
 public class MainScreen extends GameScreen implements MouseListener {
 
-  private final int STATUS_BAR_HEIGHT = 20;
-  private final Font FONT = new Font(Font.SANS_SERIF, Font.BOLD, STATUS_BAR_HEIGHT - 2);
-
-  private final IBoard board = new Board(0, STATUS_BAR_HEIGHT);
+  private final IBoard board = new Board();
+  private final StatusBarBase statusBar = new StatusBar(board);
 
   public MainScreen() {
-    setScreenSize(board.width(), board.height() + STATUS_BAR_HEIGHT);
+    setScreenSize(board.width(), board.height() + statusBar.height());
     addMouseListener(this);
+    statusBar.setLocation(0, 0);
+    board.setLocation(0, statusBar.height());
   }
 
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    g.setFont(FONT);
-    GameUtilities.drawString(g, 0, 0, board.currentStone().name());
+    statusBar.draw(g);
     board.draw(g);
   }
 

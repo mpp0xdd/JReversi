@@ -31,5 +31,9 @@ public interface IBoard {
 
   Point getLocation();
 
+  void setLocation(Point point);
+
+  void setLocation(int x, int y);
+
   void draw(Graphics g);
 }

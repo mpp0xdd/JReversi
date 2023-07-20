@@ -141,6 +141,16 @@ public class Board implements IBoard {
     return this.point.getLocation();
   }
 
+  @Override
+  public void setLocation(Point point) {
+    this.point.setLocation(point);
+  }
+
+  @Override
+  public void setLocation(int x, int y) {
+    this.point.setLocation(x, y);
+  }
+
   private void drawSquare(Graphics g, int x, int y) {
     g.setColor(canPutStone(x, y) ? ColorFactory.khaki() : ColorFactory.green());
     g.fill3DRect(
