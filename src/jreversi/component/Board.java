@@ -137,6 +137,19 @@ public class Board implements IBoard {
   }
 
   @Override
+  public int countStones(Stone stone) {
+    int count = 0;
+    for (int y = 0; y < rows(); y++) {
+      for (int x = 0; x < columns(); x++) {
+        if (getStone(x, y) == stone) {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+
+  @Override
   public Point getLocation() {
     return this.point.getLocation();
   }

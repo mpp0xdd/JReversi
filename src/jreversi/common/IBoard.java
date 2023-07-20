@@ -28,5 +28,7 @@ public interface IBoard extends Locatable {
 
   void putStone(int x, int y);
 
+  int countStones(Stone stone);
+
   void draw(Graphics g);
 }

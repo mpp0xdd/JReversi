@@ -12,7 +12,8 @@ import jreversi.resource.ColorFactory;
 
 public class StatusBar extends StatusBarBase {
 
-  private final Font FONT = new Font(Font.SANS_SERIF, Font.BOLD, height() - 2);
+  private final Font FONT_OF_CURRENT_STONE = new Font(Font.SANS_SERIF, Font.BOLD, height() - 2);
+  private final Font FONT_OF_COUNT_STONES = new Font(Font.MONOSPACED, Font.BOLD, height() - 2);
 
   public StatusBar(IBoard board, Point point) {
     super(board, point);
@@ -41,7 +42,13 @@ public class StatusBar extends StatusBarBase {
     g.fillRect(getLocation().x, getLocation().y, width(), height());
 
     g.setColor(toColor(board.currentStone()));
-    g.setFont(FONT);
+    g.setFont(FONT_OF_CURRENT_STONE);
     GameUtilities.drawString(g, getLocation().x, getLocation().y, board.currentStone().name());
+    g.setFont(FONT_OF_COUNT_STONES);
+    GameUtilities.drawStringFromTopRight(
+        g,
+        getLocation().x + width(),
+        getLocation().y,
+        String.format("B:%s W:%s", board.countStones(Stone.BLACK), board.countStones(Stone.WHITE)));
   }
 }
