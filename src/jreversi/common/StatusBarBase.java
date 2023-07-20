@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Objects;
 
-public abstract class StatusBarBase {
+public abstract class StatusBarBase implements Locatable {
   protected final IBoard board;
   private final Point point;
 
@@ -13,14 +13,17 @@ public abstract class StatusBarBase {
     this.point = Objects.requireNonNull(point).getLocation();
   }
 
+  @Override
   public Point getLocation() {
     return point.getLocation();
   }
 
+  @Override
   public void setLocation(Point point) {
     this.point.setLocation(point);
   }
 
+  @Override
   public void setLocation(int x, int y) {
     this.point.setLocation(x, y);
   }

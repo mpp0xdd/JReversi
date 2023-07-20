@@ -1,9 +1,8 @@
 package jreversi.common;
 
 import java.awt.Graphics;
-import java.awt.Point;
 
-public interface IBoard {
+public interface IBoard extends Locatable {
 
   int squareSize();
 
@@ -28,12 +27,6 @@ public interface IBoard {
   Stone getStone(int x, int y);
 
   void putStone(int x, int y);
-
-  Point getLocation();
-
-  void setLocation(Point point);
-
-  void setLocation(int x, int y);
 
   void draw(Graphics g);
 }
