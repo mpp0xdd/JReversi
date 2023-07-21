@@ -80,7 +80,11 @@ public class Board implements IBoard {
 
   @Override
   public void putStone(int x, int y) {
-    putStoneImpl(x, y, true);
+    if (putStoneImpl(x, y, true)) {
+      if (!canPutStone()) {
+        this.currentStone = currentStone().flip();
+      }
+    }
   }
 
   private boolean putStoneImpl(int x, int y, boolean putStone) {
@@ -134,6 +138,17 @@ public class Board implements IBoard {
 
   private boolean canPutStone(int x, int y) {
     return putStoneImpl(x, y, false);
+  }
+
+  private boolean canPutStone() {
+    for (int y = 0; y < rows(); y++) {
+      for (int x = 0; x < columns(); x++) {
+        if (canPutStone(x, y)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   @Override
