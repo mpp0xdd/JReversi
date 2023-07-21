@@ -65,17 +65,9 @@ public class Board implements IBoard {
     return currentStone;
   }
 
-  private boolean isInRange(Point p) {
-    return (0 <= p.x && p.x < columns()) && (0 <= p.y && p.y < rows());
-  }
-
   @Override
   public Stone getStone(int x, int y) {
     return board[y][x];
-  }
-
-  private Stone getStone(Point p) {
-    return getStone(p.x, p.y);
   }
 
   @Override
@@ -85,6 +77,52 @@ public class Board implements IBoard {
         this.currentStone = currentStone().flip();
       }
     }
+  }
+
+  @Override
+  public int countStones(Stone stone) {
+    int count = 0;
+    for (int y = 0; y < rows(); y++) {
+      for (int x = 0; x < columns(); x++) {
+        if (getStone(x, y) == stone) {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+
+  @Override
+  public Point getLocation() {
+    return this.point.getLocation();
+  }
+
+  @Override
+  public void setLocation(Point point) {
+    this.point.setLocation(point);
+  }
+
+  @Override
+  public void setLocation(int x, int y) {
+    this.point.setLocation(x, y);
+  }
+
+  @Override
+  public void draw(Graphics g) {
+    for (int y = 0; y < rows(); y++) {
+      for (int x = 0; x < columns(); x++) {
+        drawSquare(g, x, y);
+        drawStone(g, x, y);
+      }
+    }
+  }
+
+  private boolean isInRange(Point p) {
+    return (0 <= p.x && p.x < columns()) && (0 <= p.y && p.y < rows());
+  }
+
+  private Stone getStone(Point p) {
+    return getStone(p.x, p.y);
   }
 
   private boolean putStoneImpl(int x, int y, boolean putStone) {
@@ -151,34 +189,6 @@ public class Board implements IBoard {
     return false;
   }
 
-  @Override
-  public int countStones(Stone stone) {
-    int count = 0;
-    for (int y = 0; y < rows(); y++) {
-      for (int x = 0; x < columns(); x++) {
-        if (getStone(x, y) == stone) {
-          count++;
-        }
-      }
-    }
-    return count;
-  }
-
-  @Override
-  public Point getLocation() {
-    return this.point.getLocation();
-  }
-
-  @Override
-  public void setLocation(Point point) {
-    this.point.setLocation(point);
-  }
-
-  @Override
-  public void setLocation(int x, int y) {
-    this.point.setLocation(x, y);
-  }
-
   private void drawSquare(Graphics g, int x, int y) {
     g.setColor(canPutStone(x, y) ? ColorFactory.khaki() : ColorFactory.green());
     g.fill3DRect(
@@ -203,15 +213,5 @@ public class Board implements IBoard {
         point.y + y * squareSize() + padding,
         stoneSize(),
         stoneSize());
-  }
-
-  @Override
-  public void draw(Graphics g) {
-    for (int y = 0; y < rows(); y++) {
-      for (int x = 0; x < columns(); x++) {
-        drawSquare(g, x, y);
-        drawStone(g, x, y);
-      }
-    }
   }
 }
