@@ -33,7 +33,6 @@ public class StatusBar extends StatusBarBase {
   public void draw(Graphics g) {
     drawBackground(g);
 
-    g.setColor(toColor(board.currentStone()));
     drawCurrentStone(g);
     drawGameStatus(g);
     drawCountStones(g);
@@ -54,14 +53,27 @@ public class StatusBar extends StatusBarBase {
 
   private void drawCurrentStone(Graphics g) {
     g.setFont(FONT_OF_CURRENT_STONE);
+    g.setColor(toColor(board.currentStone()));
     GameUtilities.drawString(g, getLocation().x, getLocation().y, board.currentStone().name());
   }
 
   private void drawGameStatus(Graphics g) {
     g.setFont(FONT_OF_GAME_STATUS);
+    g.setColor(ColorFactory.beige());
 
     if (board.isGameOver()) {
-      GameUtilities.drawStringAfterCentering(g, width() / 2, height() / 2, "Game Over!");
+      int numOfBlack = board.countStones(Stone.BLACK);
+      int numOfWhite = board.countStones(Stone.WHITE);
+      String result;
+      if (numOfBlack > numOfWhite) {
+        result = "Black wins!";
+      } else if (numOfWhite > numOfBlack) {
+        result = "White wins!";
+      } else {
+        result = "Draw!";
+      }
+
+      GameUtilities.drawStringAfterCentering(g, width() / 2, height() / 2, "Game Over! " + result);
       return;
     }
 
@@ -74,6 +86,7 @@ public class StatusBar extends StatusBarBase {
 
   private void drawCountStones(Graphics g) {
     g.setFont(FONT_OF_COUNT_STONES);
+    g.setColor(ColorFactory.beige());
     GameUtilities.drawStringFromTopRight(
         g,
         getLocation().x + width(),

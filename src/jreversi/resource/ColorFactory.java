@@ -9,6 +9,7 @@ public final class ColorFactory {
   }
 
   private static final Color STATUS_BAR_COLOR = new Color(47, 79, 79);
+  private static final Color BEIGE = new Color(245, 245, 220);
   private static final Color GREEN = new Color(0, 158, 11);
   private static final Color KHAKI = new Color(240, 230, 140);
   private static final Color BLACK = Color.BLACK;
@@ -16,6 +17,10 @@ public final class ColorFactory {
 
   public static Color statusBarColor() {
     return STATUS_BAR_COLOR;
+  }
+
+  public static Color beige() {
+    return BEIGE;
   }
 
   public static Color green() {
