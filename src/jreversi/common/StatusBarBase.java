@@ -2,9 +2,10 @@ package jreversi.common;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.Objects;
 
-public abstract class StatusBarBase implements Locatable {
+public abstract class StatusBarBase implements Locatable, Rectangular {
   protected final IBoard board;
   private final Point point;
 
@@ -26,6 +27,11 @@ public abstract class StatusBarBase implements Locatable {
   @Override
   public void setLocation(int x, int y) {
     this.point.setLocation(x, y);
+  }
+
+  @Override
+  public Rectangle asRectangle() {
+    return new Rectangle(point.x, point.y, width(), height());
   }
 
   public int width() {
