@@ -48,6 +48,10 @@ class Transcript implements ITranscript {
     transcript.add(record);
   }
 
+  public void clear() {
+    transcript.clear();
+  }
+
   public static class Record implements IRecord {
     private final Point point;
     private final Stone stone;

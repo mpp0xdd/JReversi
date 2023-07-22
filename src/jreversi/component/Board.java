@@ -63,6 +63,8 @@ public class Board implements IBoard {
     this.board[4][3] = Stone.BLACK;
     this.board[4][4] = Stone.WHITE;
 
+    this.transcript.clear();
+
     // Initialize turn.
     this.currentStone = Stone.BLACK;
   }
