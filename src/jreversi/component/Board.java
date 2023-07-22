@@ -107,6 +107,11 @@ public class Board implements IBoard {
   }
 
   @Override
+  public boolean canPutStone(int x, int y) {
+    return putStoneImpl(x, y, false);
+  }
+
+  @Override
   public int countStones(Stone stone) {
     int count = 0;
     for (int y = 0; y < rows(); y++) {
@@ -205,10 +210,6 @@ public class Board implements IBoard {
       return true;
     }
     return false;
-  }
-
-  private boolean canPutStone(int x, int y) {
-    return putStoneImpl(x, y, false);
   }
 
   private boolean canPutStone() {
