@@ -22,6 +22,8 @@ public interface IBoard extends Locatable {
 
   void init();
 
+  boolean isGameOver();
+
   ITranscript transcript();
 
   Stone currentStone();

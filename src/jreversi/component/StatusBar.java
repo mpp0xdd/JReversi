@@ -59,6 +59,12 @@ public class StatusBar extends StatusBarBase {
 
   private void drawGameStatus(Graphics g) {
     g.setFont(FONT_OF_GAME_STATUS);
+
+    if (board.isGameOver()) {
+      GameUtilities.drawStringAfterCentering(g, width() / 2, height() / 2, "Game Over!");
+      return;
+    }
+
     if (board.transcript().size() > 0) {
       if (board.transcript().latest().stone() == board.currentStone()) {
         GameUtilities.drawStringAfterCentering(g, width() / 2, height() / 2, "PASS");

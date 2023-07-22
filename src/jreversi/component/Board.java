@@ -10,12 +10,14 @@ import jreversi.resource.ColorFactory;
 
 public class Board implements IBoard {
 
+  private boolean isGameOver;
   private final Point point;
   private final Stone[][] board;
   private final Transcript transcript;
   private Stone currentStone;
 
   public Board(int x, int y) {
+    this.isGameOver = false;
     this.point = new Point(x, y);
     this.board = new Stone[rows()][columns()];
     this.transcript = new Transcript();
@@ -48,6 +50,8 @@ public class Board implements IBoard {
 
   @Override
   public void init() {
+    this.isGameOver = false;
+
     // Initialize board state.
     for (int y = 0; y < rows(); y++) {
       for (int x = 0; x < columns(); x++) {
@@ -61,6 +65,11 @@ public class Board implements IBoard {
 
     // Initialize turn.
     this.currentStone = Stone.BLACK;
+  }
+
+  @Override
+  public boolean isGameOver() {
+    return isGameOver;
   }
 
   @Override
@@ -80,9 +89,16 @@ public class Board implements IBoard {
 
   @Override
   public void putStone(int x, int y) {
+    if (isGameOver()) {
+      return;
+    }
+
     if (putStoneImpl(x, y, true)) {
       if (!canPutStone()) {
         this.currentStone = currentStone().flip();
+        if (!canPutStone()) {
+          isGameOver = true;
+        }
       }
     }
   }
