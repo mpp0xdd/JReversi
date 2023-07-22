@@ -34,7 +34,7 @@ public class MainScreen extends GameScreen implements MouseListener {
   }
 
   @Override
-  public void mouseClicked(MouseEvent e) {
+  public void mousePressed(MouseEvent e) {
     if (!board.asRectangle().contains(e.getPoint())) {
       return;
     }
@@ -46,10 +46,10 @@ public class MainScreen extends GameScreen implements MouseListener {
   }
 
   @Override
-  public void mousePressed(MouseEvent e) {}
+  public void mouseReleased(MouseEvent e) {}
 
   @Override
-  public void mouseReleased(MouseEvent e) {}
+  public void mouseClicked(MouseEvent e) {}
 
   @Override
   public void mouseEntered(MouseEvent e) {}
