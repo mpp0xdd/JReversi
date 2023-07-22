@@ -169,9 +169,9 @@ public class Board implements IBoard {
       return false;
     }
 
-    for (Direction direction : Direction.values()) {
+    for (Direction d : Direction.values()) {
       cursor.setLocation(x, y);
-      cursor.translate(direction.X, direction.Y);
+      cursor.translate(d.X, d.Y);
       if (!isInRange(cursor)) {
         continue;
       }
@@ -180,7 +180,7 @@ public class Board implements IBoard {
       }
 
       while (isInRange(cursor)) {
-        cursor.translate(direction.X, direction.Y);
+        cursor.translate(d.X, d.Y);
         if (!isInRange(cursor)) {
           break;
         }
@@ -196,10 +196,10 @@ public class Board implements IBoard {
         }
 
         board[y][x] = currentStone();
-        cursor.translate(-direction.X, -direction.Y);
+        cursor.translate(-d.X, -d.Y);
         while (cursor.x != x || cursor.y != y) {
           board[cursor.y][cursor.x] = board[cursor.y][cursor.x].flip();
-          cursor.translate(-direction.X, -direction.Y);
+          cursor.translate(-d.X, -d.Y);
         }
         break;
       }
