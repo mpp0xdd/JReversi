@@ -28,14 +28,6 @@ public class StatusBar extends StatusBarBase {
     return 20;
   }
 
-  private Color toColor(Stone stone) {
-    return switch (stone) {
-      case BLACK -> ColorFactory.black();
-      case WHITE -> ColorFactory.white();
-      default -> throw new IllegalArgumentException("Stone to Color conversion failed: " + stone);
-    };
-  }
-
   @Override
   public void draw(Graphics g) {
     g.setColor(ColorFactory.statusBarColor());
@@ -57,5 +49,13 @@ public class StatusBar extends StatusBarBase {
         getLocation().x + width(),
         getLocation().y,
         String.format("B:%s W:%s", board.countStones(Stone.BLACK), board.countStones(Stone.WHITE)));
+  }
+
+  private Color toColor(Stone stone) {
+    return switch (stone) {
+      case BLACK -> ColorFactory.black();
+      case WHITE -> ColorFactory.white();
+      default -> throw new IllegalArgumentException("Stone to Color conversion failed: " + stone);
+    };
   }
 }
