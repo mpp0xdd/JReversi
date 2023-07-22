@@ -170,8 +170,7 @@ public class Board implements IBoard {
     }
 
     for (Direction d : Direction.values()) {
-      cursor.setLocation(x, y);
-      cursor.translate(d.X, d.Y);
+      cursor.move(x + d.X, y + d.Y);
       if (!isInRange(cursor)) {
         continue;
       }
@@ -179,18 +178,13 @@ public class Board implements IBoard {
         continue;
       }
 
-      while (isInRange(cursor)) {
-        cursor.translate(d.X, d.Y);
-        if (!isInRange(cursor)) {
-          break;
-        }
+      for (cursor.translate(d.X, d.Y); isInRange(cursor); cursor.translate(d.X, d.Y)) {
         if (getStone(cursor) == Stone.NONE) {
           break;
         }
-        if (getStone(cursor) == currentStone().flip()) {
+        if (getStone(cursor) != currentStone()) {
           continue;
         }
-        assert getStone(cursor) == currentStone();
         if (!putStone) {
           return true;
         }
