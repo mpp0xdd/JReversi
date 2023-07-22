@@ -13,6 +13,7 @@ import jreversi.resource.ColorFactory;
 public class StatusBar extends StatusBarBase {
 
   private final Font FONT_OF_CURRENT_STONE = new Font(Font.SANS_SERIF, Font.BOLD, height() - 2);
+  private final Font FONT_OF_GAME_STATUS = new Font(Font.SANS_SERIF, Font.ITALIC, height() - 2);
   private final Font FONT_OF_COUNT_STONES = new Font(Font.MONOSPACED, Font.BOLD, height() - 2);
 
   public StatusBar(IBoard board, Point point) {
@@ -30,25 +31,12 @@ public class StatusBar extends StatusBarBase {
 
   @Override
   public void draw(Graphics g) {
-    g.setColor(ColorFactory.statusBarColor());
-    g.fillRect(getLocation().x, getLocation().y, width(), height());
+    drawBackground(g);
 
     g.setColor(toColor(board.currentStone()));
-    g.setFont(FONT_OF_CURRENT_STONE);
-    GameUtilities.drawString(g, getLocation().x, getLocation().y, board.currentStone().name());
-
-    if (board.transcript().size() > 0) {
-      if (board.transcript().latest().stone() == board.currentStone()) {
-        GameUtilities.drawStringAfterCentering(g, width() / 2, height() / 2, "PASS");
-      }
-    }
-
-    g.setFont(FONT_OF_COUNT_STONES);
-    GameUtilities.drawStringFromTopRight(
-        g,
-        getLocation().x + width(),
-        getLocation().y,
-        String.format("B:%s W:%s", board.countStones(Stone.BLACK), board.countStones(Stone.WHITE)));
+    drawCurrentStone(g);
+    drawGameStatus(g);
+    drawCountStones(g);
   }
 
   private Color toColor(Stone stone) {
@@ -57,5 +45,33 @@ public class StatusBar extends StatusBarBase {
       case WHITE -> ColorFactory.white();
       default -> throw new IllegalArgumentException("Stone to Color conversion failed: " + stone);
     };
+  }
+
+  private void drawBackground(Graphics g) {
+    g.setColor(ColorFactory.statusBarColor());
+    g.fillRect(getLocation().x, getLocation().y, width(), height());
+  }
+
+  private void drawCurrentStone(Graphics g) {
+    g.setFont(FONT_OF_CURRENT_STONE);
+    GameUtilities.drawString(g, getLocation().x, getLocation().y, board.currentStone().name());
+  }
+
+  private void drawGameStatus(Graphics g) {
+    g.setFont(FONT_OF_GAME_STATUS);
+    if (board.transcript().size() > 0) {
+      if (board.transcript().latest().stone() == board.currentStone()) {
+        GameUtilities.drawStringAfterCentering(g, width() / 2, height() / 2, "PASS");
+      }
+    }
+  }
+
+  private void drawCountStones(Graphics g) {
+    g.setFont(FONT_OF_COUNT_STONES);
+    GameUtilities.drawStringFromTopRight(
+        g,
+        getLocation().x + width(),
+        getLocation().y,
+        String.format("B:%s W:%s", board.countStones(Stone.BLACK), board.countStones(Stone.WHITE)));
   }
 }
