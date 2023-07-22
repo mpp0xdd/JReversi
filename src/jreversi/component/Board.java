@@ -97,8 +97,9 @@ public class Board implements IBoard {
     }
 
     if (putStoneImpl(x, y, true)) {
+      currentStone = currentStone().flip();
       if (!canPutStone()) {
-        this.currentStone = currentStone().flip();
+        currentStone = currentStone().flip();
         if (!canPutStone()) {
           isGameOver = true;
         }
@@ -206,7 +207,6 @@ public class Board implements IBoard {
 
     if (getStone(x, y) == currentStone()) {
       transcript.add(new Transcript.Record(new Point(x, y), currentStone()));
-      this.currentStone = currentStone().flip();
       return true;
     }
     return false;
