@@ -2,6 +2,7 @@ package jreversi.component;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import jreversi.common.Direction;
 import jreversi.common.IBoard;
 import jreversi.common.ITranscript;
@@ -131,6 +132,11 @@ public class Board implements IBoard {
   @Override
   public void setLocation(int x, int y) {
     this.point.setLocation(x, y);
+  }
+
+  @Override
+  public Rectangle asRectangle() {
+    return new Rectangle(point.x, point.y, width(), height());
   }
 
   @Override

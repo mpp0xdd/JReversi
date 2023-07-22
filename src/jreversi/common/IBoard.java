@@ -2,7 +2,7 @@ package jreversi.common;
 
 import java.awt.Graphics;
 
-public interface IBoard extends Locatable {
+public interface IBoard extends Locatable, Rectangular {
 
   int squareSize();
 
