@@ -21,6 +21,9 @@ public interface ITranscript {
     Stone stone();
 
     @Override
+    String toString();
+
+    @Override
     int hashCode();
 
     @Override

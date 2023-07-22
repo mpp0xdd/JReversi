@@ -72,6 +72,11 @@ class Transcript implements ITranscript {
     }
 
     @Override
+    public String toString() {
+      return String.format("(%s,%s,%s)", point.x, point.y, stone.name());
+    }
+
+    @Override
     public int hashCode() {
       return Objects.hash(point, stone);
     }
