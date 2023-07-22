@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import jreversi.common.Direction;
 import jreversi.common.IBoard;
+import jreversi.common.ITranscript;
 import jreversi.common.Stone;
 import jreversi.resource.ColorFactory;
 
@@ -11,11 +12,13 @@ public class Board implements IBoard {
 
   private final Point point;
   private final Stone[][] board;
+  private final Transcript transcript;
   private Stone currentStone;
 
   public Board(int x, int y) {
     this.point = new Point(x, y);
     this.board = new Stone[rows()][columns()];
+    this.transcript = new Transcript();
     init();
   }
 
@@ -58,6 +61,11 @@ public class Board implements IBoard {
 
     // Initialize turn.
     this.currentStone = Stone.BLACK;
+  }
+
+  @Override
+  public ITranscript transcript() {
+    return transcript;
   }
 
   @Override
@@ -168,6 +176,7 @@ public class Board implements IBoard {
     }
 
     if (getStone(x, y) == currentStone()) {
+      transcript.add(new Transcript.Record(new Point(x, y), currentStone()));
       this.currentStone = currentStone().flip();
       return true;
     }

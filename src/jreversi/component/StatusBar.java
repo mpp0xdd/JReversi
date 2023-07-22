@@ -44,6 +44,13 @@ public class StatusBar extends StatusBarBase {
     g.setColor(toColor(board.currentStone()));
     g.setFont(FONT_OF_CURRENT_STONE);
     GameUtilities.drawString(g, getLocation().x, getLocation().y, board.currentStone().name());
+
+    if (board.transcript().size() > 0) {
+      if (board.transcript().latest().stone() == board.currentStone()) {
+        GameUtilities.drawStringAfterCentering(g, width() / 2, height() / 2, "PASS");
+      }
+    }
+
     g.setFont(FONT_OF_COUNT_STONES);
     GameUtilities.drawStringFromTopRight(
         g,

@@ -22,6 +22,8 @@ public interface IBoard extends Locatable {
 
   void init();
 
+  ITranscript transcript();
+
   Stone currentStone();
 
   Stone getStone(int x, int y);
