@@ -20,6 +20,8 @@ public interface ITranscript {
 
     Stone stone();
 
+    List<Point> points();
+
     @Override
     String toString();
 

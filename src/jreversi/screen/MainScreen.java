@@ -41,6 +41,9 @@ public class MainScreen extends GameScreen implements MouseListener {
     int cx = (e.getX() - board.getLocation().x) / board.squareSize();
     int cy = (e.getY() - board.getLocation().y) / board.squareSize();
     board.putStone(cx, cy);
+    if (board.isGameOver()) {
+      board.transcript().records().stream().forEach(System.out::println);
+    }
     repaint();
   }
 

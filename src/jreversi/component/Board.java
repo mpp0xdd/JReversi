@@ -3,6 +3,8 @@ package jreversi.component;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 import jreversi.common.Direction;
 import jreversi.common.IBoard;
 import jreversi.common.ITranscript;
@@ -163,11 +165,16 @@ public class Board implements IBoard {
     return getStone(p.x, p.y);
   }
 
+  private void flipStone(Point p) {
+    this.board[p.y][p.x] = getStone(p).flip();
+  }
+
   private boolean putStoneImpl(Point p, boolean putStone) {
     if (getStone(p) != Stone.NONE) {
       return false;
     }
 
+    List<Point> points = new ArrayList<>();
     for (Direction d : Direction.values()) {
       Point c = new Point(p.x + d.X, p.y + d.Y);
       if (!isInRange(c)) {
@@ -188,16 +195,17 @@ public class Board implements IBoard {
           return true;
         }
 
-        board[p.y][p.x] = currentStone();
         for (c.translate(-d.X, -d.Y); !c.equals(p); c.translate(-d.X, -d.Y)) {
-          board[c.y][c.x] = board[c.y][c.x].flip();
+          points.add(c.getLocation());
         }
         break;
       }
     }
 
-    if (getStone(p) == currentStone()) {
-      transcript.add(new Transcript.Record(p, currentStone()));
+    if (!points.isEmpty()) {
+      board[p.y][p.x] = currentStone();
+      points.stream().forEach(this::flipStone);
+      transcript.add(new Transcript.Record(p, currentStone(), points));
       return true;
     }
     return false;

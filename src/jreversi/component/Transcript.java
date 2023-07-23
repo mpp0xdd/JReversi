@@ -55,10 +55,12 @@ class Transcript implements ITranscript {
   public static class Record implements IRecord {
     private final Point point;
     private final Stone stone;
+    private final List<Point> points;
 
-    public Record(Point point, Stone stone) {
+    public Record(Point point, Stone stone, List<Point> points) {
       this.point = Objects.requireNonNull(point).getLocation();
       this.stone = Objects.requireNonNull(stone);
+      this.points = Collections.unmodifiableList(points);
     }
 
     @Override
@@ -72,13 +74,18 @@ class Transcript implements ITranscript {
     }
 
     @Override
+    public List<Point> points() {
+      return points;
+    }
+
+    @Override
     public String toString() {
-      return String.format("(%s,%s,%s)", point.x, point.y, stone.name());
+      return String.format("(%s,%s,%s) %s", point.x, point.y, stone.name(), points);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(point, stone);
+      return Objects.hash(point, stone, points);
     }
 
     @Override
@@ -87,7 +94,9 @@ class Transcript implements ITranscript {
       if (obj == null) return false;
       if (getClass() != obj.getClass()) return false;
       Record other = (Record) obj;
-      return Objects.equals(point, other.point) && stone == other.stone;
+      return Objects.equals(point, other.point)
+          && stone == other.stone
+          && Objects.equals(points, other.points);
     }
   }
 }
