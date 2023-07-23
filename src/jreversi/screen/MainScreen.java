@@ -1,6 +1,8 @@
 package jreversi.screen;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import jglib.component.GameScreen;
@@ -9,7 +11,7 @@ import jreversi.common.StatusBarBase;
 import jreversi.component.Board;
 import jreversi.component.StatusBar;
 
-public class MainScreen extends GameScreen implements MouseListener {
+public class MainScreen extends GameScreen implements MouseListener, KeyListener {
 
   private final IBoard board = new Board();
   private final StatusBarBase statusBar = new StatusBar(board);
@@ -17,6 +19,8 @@ public class MainScreen extends GameScreen implements MouseListener {
   public MainScreen() {
     setScreenSize(board.width(), board.height() + statusBar.height());
     addMouseListener(this);
+    addKeyListener(this);
+    setFocusable(true);
     statusBar.setLocation(0, 0);
     board.setLocation(0, statusBar.height());
   }
@@ -48,6 +52,14 @@ public class MainScreen extends GameScreen implements MouseListener {
   }
 
   @Override
+  public void keyPressed(KeyEvent e) {
+    if (e.getKeyChar() == 'u') {
+      board.undo();
+      repaint();
+    }
+  }
+
+  @Override
   public void mouseReleased(MouseEvent e) {}
 
   @Override
@@ -58,4 +70,10 @@ public class MainScreen extends GameScreen implements MouseListener {
 
   @Override
   public void mouseExited(MouseEvent e) {}
+
+  @Override
+  public void keyTyped(KeyEvent e) {}
+
+  @Override
+  public void keyReleased(KeyEvent e) {}
 }

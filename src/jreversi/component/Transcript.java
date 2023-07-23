@@ -41,11 +41,20 @@ class Transcript implements ITranscript {
     return transcript.size();
   }
 
+  @Override
+  public boolean isEmpty() {
+    return transcript.isEmpty();
+  }
+
   public void add(IRecord record) {
     if (transcript.contains(record)) {
       return;
     }
     transcript.add(record);
+  }
+
+  public boolean remove(IRecord record) {
+    return transcript.remove(record);
   }
 
   public void clear() {

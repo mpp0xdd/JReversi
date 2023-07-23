@@ -15,6 +15,8 @@ public interface ITranscript {
 
   int size();
 
+  boolean isEmpty();
+
   public interface IRecord {
     Point point();
 

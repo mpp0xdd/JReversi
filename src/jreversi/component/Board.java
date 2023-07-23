@@ -5,9 +5,11 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import jreversi.common.Direction;
 import jreversi.common.IBoard;
 import jreversi.common.ITranscript;
+import jreversi.common.ITranscript.IRecord;
 import jreversi.common.Stone;
 import jreversi.resource.ColorFactory;
 
@@ -70,6 +72,20 @@ public class Board implements IBoard {
 
     // Initialize turn.
     this.currentStone = Stone.BLACK;
+  }
+
+  @Override
+  public void undo() {
+    if (transcript.isEmpty()) {
+      return;
+    }
+
+    IRecord latest = transcript.latest();
+    setStone(latest.point(), Stone.NONE);
+    this.currentStone = latest.stone();
+    latest.points().stream().forEach(this::flipStone);
+    this.isGameOver = false;
+    transcript.remove(latest);
   }
 
   @Override
@@ -163,6 +179,10 @@ public class Board implements IBoard {
 
   private Stone getStone(Point p) {
     return getStone(p.x, p.y);
+  }
+
+  private void setStone(Point p, Stone stone) {
+    this.board[p.y][p.x] = Objects.requireNonNull(stone);
   }
 
   private void flipStone(Point p) {
