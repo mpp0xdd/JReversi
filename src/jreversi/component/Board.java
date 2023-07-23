@@ -169,43 +169,43 @@ public class Board implements IBoard {
     this.board[p.y][p.x] = getStone(p).flip();
   }
 
-  private boolean putStoneImpl(Point p, boolean putStone) {
-    if (getStone(p) != Stone.NONE) {
+  private boolean putStoneImpl(Point point, boolean putStone) {
+    if (getStone(point) != Stone.NONE) {
       return false;
     }
 
     List<Point> points = new ArrayList<>();
     for (Direction d : Direction.values()) {
-      Point c = new Point(p.x + d.X, p.y + d.Y);
-      if (!isInRange(c)) {
+      Point cursor = new Point(point.x + d.X, point.y + d.Y);
+      if (!isInRange(cursor)) {
         continue;
       }
-      if (getStone(c) != currentStone().flip()) {
+      if (getStone(cursor) != currentStone().flip()) {
         continue;
       }
 
-      for (c.translate(d.X, d.Y); isInRange(c); c.translate(d.X, d.Y)) {
-        if (getStone(c) == Stone.NONE) {
+      for (cursor.translate(d.X, d.Y); isInRange(cursor); cursor.translate(d.X, d.Y)) {
+        if (getStone(cursor) == Stone.NONE) {
           break;
         }
-        if (getStone(c) != currentStone()) {
+        if (getStone(cursor) != currentStone()) {
           continue;
         }
         if (!putStone) {
           return true;
         }
 
-        for (c.translate(-d.X, -d.Y); !c.equals(p); c.translate(-d.X, -d.Y)) {
-          points.add(c.getLocation());
+        for (cursor.translate(-d.X, -d.Y); !cursor.equals(point); cursor.translate(-d.X, -d.Y)) {
+          points.add(cursor.getLocation());
         }
         break;
       }
     }
 
     if (!points.isEmpty()) {
-      board[p.y][p.x] = currentStone();
+      board[point.y][point.x] = currentStone();
       points.stream().forEach(this::flipStone);
-      transcript.add(new Transcript.Record(p, currentStone(), points));
+      transcript.add(new Transcript.Record(point, currentStone(), points));
       return true;
     }
     return false;
