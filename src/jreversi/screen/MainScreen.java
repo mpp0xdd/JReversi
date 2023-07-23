@@ -1,26 +1,23 @@
 package jreversi.screen;
 
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import jglib.component.GameScreen;
+import jreversi.common.BoardObserver;
 import jreversi.common.IBoard;
+import jreversi.common.IBot;
 import jreversi.common.StatusBarBase;
 import jreversi.component.Board;
+import jreversi.component.Bot;
 import jreversi.component.StatusBar;
 
-public class MainScreen extends GameScreen implements MouseListener, KeyListener {
+public class MainScreen extends GameScreen implements BoardObserver {
 
   private final IBoard board = new Board();
   private final StatusBarBase statusBar = new StatusBar(board);
+  private final IBot bot = new Bot();
 
   public MainScreen() {
     setScreenSize(board.width(), board.height() + statusBar.height());
-    addMouseListener(this);
-    addKeyListener(this);
-    setFocusable(true);
     statusBar.setLocation(0, 0);
     board.setLocation(0, statusBar.height());
   }
@@ -33,53 +30,16 @@ public class MainScreen extends GameScreen implements MouseListener, KeyListener
   }
 
   @Override
+  public void boardUpdate() {
+    paintImmediately(board.asRectangle());
+  }
+
+  @Override
   protected void runGameLoop() {
-    // nop
-  }
-
-  @Override
-  public void mousePressed(MouseEvent e) {
-    if (!board.asRectangle().contains(e.getPoint())) {
-      return;
-    }
-    int cx = (e.getX() - board.getLocation().x) / board.squareSize();
-    int cy = (e.getY() - board.getLocation().y) / board.squareSize();
-    board.putStone(cx, cy);
-    if (board.isGameOver()) {
-      board.transcript().records().stream().forEach(System.out::println);
-    }
+    bot.compute(board, this);
     repaint();
-  }
-
-  @Override
-  public void keyPressed(KeyEvent e) {
-    switch (e.getKeyChar()) {
-      case 'u' -> {
-        board.undo();
-        repaint();
-      }
-      case 'r' -> {
-        board.redo();
-        repaint();
-      }
+    if (board.isGameOver()) {
+      stopGameLoop();
     }
   }
-
-  @Override
-  public void mouseReleased(MouseEvent e) {}
-
-  @Override
-  public void mouseEntered(MouseEvent e) {}
-
-  @Override
-  public void mouseClicked(MouseEvent e) {}
-
-  @Override
-  public void mouseExited(MouseEvent e) {}
-
-  @Override
-  public void keyTyped(KeyEvent e) {}
-
-  @Override
-  public void keyReleased(KeyEvent e) {}
 }

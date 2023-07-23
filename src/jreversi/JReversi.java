@@ -12,5 +12,8 @@ public class JReversi {
 
     window.switchGameScreen(screen);
     window.setVisible(true);
+    screen.startGameLoop();
+    screen.joinGameLoop();
+    System.err.println("Done!");
   }
 }
