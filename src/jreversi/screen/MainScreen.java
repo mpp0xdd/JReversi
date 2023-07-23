@@ -53,9 +53,15 @@ public class MainScreen extends GameScreen implements MouseListener, KeyListener
 
   @Override
   public void keyPressed(KeyEvent e) {
-    if (e.getKeyChar() == 'u') {
-      board.undo();
-      repaint();
+    switch (e.getKeyChar()) {
+      case 'u' -> {
+        board.undo();
+        repaint();
+      }
+      case 'r' -> {
+        board.redo();
+        repaint();
+      }
     }
   }
 

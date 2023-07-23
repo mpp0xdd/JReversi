@@ -24,6 +24,8 @@ public interface IBoard extends Locatable, Rectangular {
 
   void undo();
 
+  void redo();
+
   boolean isGameOver();
 
   ITranscript transcript();

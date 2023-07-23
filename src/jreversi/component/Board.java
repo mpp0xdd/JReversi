@@ -3,7 +3,9 @@ package jreversi.component;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.Objects;
 import jreversi.common.Direction;
@@ -19,6 +21,8 @@ public class Board implements IBoard {
   private final Point point;
   private final Stone[][] board;
   private final Transcript transcript;
+  private final Deque<IRecord> undoRecords;
+  private boolean redoable;
   private Stone currentStone;
 
   public Board(int x, int y) {
@@ -26,6 +30,8 @@ public class Board implements IBoard {
     this.point = new Point(x, y);
     this.board = new Stone[rows()][columns()];
     this.transcript = new Transcript();
+    this.undoRecords = new ArrayDeque<>();
+    this.redoable = false;
     init();
   }
 
@@ -86,6 +92,23 @@ public class Board implements IBoard {
     latest.points().stream().forEach(this::flipStone);
     this.isGameOver = false;
     transcript.remove(latest);
+    if (redoable) {
+      undoRecords.addFirst(latest);
+    } else {
+      undoRecords.clear();
+      undoRecords.addFirst(latest);
+      redoable = true;
+    }
+  }
+
+  @Override
+  public void redo() {
+    if (redoable) {
+      IRecord undoRecord = undoRecords.removeFirst();
+      currentStone = undoRecord.stone();
+      putStone(undoRecord.point());
+      redoable = !undoRecords.isEmpty();
+    }
   }
 
   @Override
@@ -115,6 +138,7 @@ public class Board implements IBoard {
     }
 
     if (putStoneImpl(new Point(x, y), true)) {
+      redoable = false;
       currentStone = currentStone().flip();
       if (!canPutStone()) {
         currentStone = currentStone().flip();
@@ -183,6 +207,10 @@ public class Board implements IBoard {
 
   private void setStone(Point p, Stone stone) {
     this.board[p.y][p.x] = Objects.requireNonNull(stone);
+  }
+
+  private void putStone(Point p) {
+    putStone(p.x, p.y);
   }
 
   private void flipStone(Point p) {
