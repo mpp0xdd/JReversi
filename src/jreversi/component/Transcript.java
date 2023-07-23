@@ -57,7 +57,7 @@ class Transcript implements ITranscript {
     private final Stone stone;
 
     public Record(Point point, Stone stone) {
-      this.point = Objects.requireNonNull(point);
+      this.point = Objects.requireNonNull(point).getLocation();
       this.stone = Objects.requireNonNull(stone);
     }
 

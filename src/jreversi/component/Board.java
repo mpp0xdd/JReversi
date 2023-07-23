@@ -96,7 +96,7 @@ public class Board implements IBoard {
       return;
     }
 
-    if (putStoneImpl(x, y, true)) {
+    if (putStoneImpl(new Point(x, y), true)) {
       currentStone = currentStone().flip();
       if (!canPutStone()) {
         currentStone = currentStone().flip();
@@ -109,7 +109,7 @@ public class Board implements IBoard {
 
   @Override
   public boolean canPutStone(int x, int y) {
-    return putStoneImpl(x, y, false);
+    return putStoneImpl(new Point(x, y), false);
   }
 
   @Override
@@ -163,44 +163,41 @@ public class Board implements IBoard {
     return getStone(p.x, p.y);
   }
 
-  private boolean putStoneImpl(int x, int y, boolean putStone) {
-    final Point cursor = new Point(x, y);
-    if (getStone(cursor) != Stone.NONE) {
+  private boolean putStoneImpl(Point p, boolean putStone) {
+    if (getStone(p) != Stone.NONE) {
       return false;
     }
 
     for (Direction d : Direction.values()) {
-      cursor.move(x + d.X, y + d.Y);
-      if (!isInRange(cursor)) {
+      Point c = new Point(p.x + d.X, p.y + d.Y);
+      if (!isInRange(c)) {
         continue;
       }
-      if (getStone(cursor) != currentStone().flip()) {
+      if (getStone(c) != currentStone().flip()) {
         continue;
       }
 
-      for (cursor.translate(d.X, d.Y); isInRange(cursor); cursor.translate(d.X, d.Y)) {
-        if (getStone(cursor) == Stone.NONE) {
+      for (c.translate(d.X, d.Y); isInRange(c); c.translate(d.X, d.Y)) {
+        if (getStone(c) == Stone.NONE) {
           break;
         }
-        if (getStone(cursor) != currentStone()) {
+        if (getStone(c) != currentStone()) {
           continue;
         }
         if (!putStone) {
           return true;
         }
 
-        board[y][x] = currentStone();
-        cursor.translate(-d.X, -d.Y);
-        while (cursor.x != x || cursor.y != y) {
-          board[cursor.y][cursor.x] = board[cursor.y][cursor.x].flip();
-          cursor.translate(-d.X, -d.Y);
+        board[p.y][p.x] = currentStone();
+        for (c.translate(-d.X, -d.Y); !c.equals(p); c.translate(-d.X, -d.Y)) {
+          board[c.y][c.x] = board[c.y][c.x].flip();
         }
         break;
       }
     }
 
-    if (getStone(x, y) == currentStone()) {
-      transcript.add(new Transcript.Record(new Point(x, y), currentStone()));
+    if (getStone(p) == currentStone()) {
+      transcript.add(new Transcript.Record(p, currentStone()));
       return true;
     }
     return false;
