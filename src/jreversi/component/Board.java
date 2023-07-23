@@ -89,7 +89,7 @@ public class Board implements IBoard {
     IRecord latest = transcript.latest();
     setStone(latest.point(), Stone.NONE);
     this.currentStone = latest.stone();
-    latest.points().stream().forEach(this::flipStone);
+    latest.points().forEach(this::flipStone);
     this.isGameOver = false;
     transcript.remove(latest);
     if (redoable) {
@@ -252,7 +252,7 @@ public class Board implements IBoard {
 
     if (!points.isEmpty()) {
       board[point.y][point.x] = currentStone();
-      points.stream().forEach(this::flipStone);
+      points.forEach(this::flipStone);
       transcript.add(new Transcript.Record(point, currentStone(), points));
       return true;
     }
