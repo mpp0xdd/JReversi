@@ -45,6 +45,8 @@ public interface IBoard extends Locatable, Rectangular {
 
   boolean canPutStone(Point p);
 
+  boolean canPutStone();
+
   int countStones(Stone stone);
 
   void draw(Graphics g);

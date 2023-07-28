@@ -170,6 +170,18 @@ public class Board implements IBoard {
   }
 
   @Override
+  public boolean canPutStone() {
+    for (int y = 0; y < rows(); y++) {
+      for (int x = 0; x < columns(); x++) {
+        if (canPutStone(x, y)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  @Override
   public int countStones(Stone stone) {
     int count = 0;
     for (int y = 0; y < rows(); y++) {
@@ -262,17 +274,6 @@ public class Board implements IBoard {
       points.forEach(this::flipStone);
       transcript.add(new Transcript.Record(point, currentStone(), points));
       return true;
-    }
-    return false;
-  }
-
-  private boolean canPutStone() {
-    for (int y = 0; y < rows(); y++) {
-      for (int x = 0; x < columns(); x++) {
-        if (canPutStone(x, y)) {
-          return true;
-        }
-      }
     }
     return false;
   }
