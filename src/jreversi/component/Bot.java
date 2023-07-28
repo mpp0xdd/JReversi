@@ -25,7 +25,7 @@ public class Bot implements IBot {
     points.stream()
         .map(
             p -> {
-              board.putStone(p.x, p.y);
+              board.putStone(p);
               observer.boardUpdate();
               GameUtilities.sleep(20);
               IRecord latest = board.transcript().latest();
@@ -34,6 +34,6 @@ public class Bot implements IBot {
               return latest;
             })
         .min((r1, r2) -> r1.points().size() - r2.points().size())
-        .ifPresent(r -> board.putStone(r.point().x, r.point().y));
+        .ifPresent(r -> board.putStone(r.point()));
   }
 }

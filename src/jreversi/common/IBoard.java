@@ -1,6 +1,7 @@
 package jreversi.common;
 
 import java.awt.Graphics;
+import java.awt.Point;
 
 public interface IBoard extends Locatable, Rectangular {
 
@@ -34,9 +35,15 @@ public interface IBoard extends Locatable, Rectangular {
 
   Stone getStone(int x, int y);
 
+  Stone getStone(Point p);
+
   void putStone(int x, int y);
 
+  void putStone(Point p);
+
   boolean canPutStone(int x, int y);
+
+  boolean canPutStone(Point p);
 
   int countStones(Stone stone);
 

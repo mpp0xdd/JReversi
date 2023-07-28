@@ -132,6 +132,11 @@ public class Board implements IBoard {
   }
 
   @Override
+  public Stone getStone(Point p) {
+    return getStone(p.x, p.y);
+  }
+
+  @Override
   public void putStone(int x, int y) {
     if (isGameOver()) {
       return;
@@ -150,8 +155,18 @@ public class Board implements IBoard {
   }
 
   @Override
+  public void putStone(Point p) {
+    putStone(p.x, p.y);
+  }
+
+  @Override
   public boolean canPutStone(int x, int y) {
     return putStoneImpl(new Point(x, y), false);
+  }
+
+  @Override
+  public boolean canPutStone(Point p) {
+    return canPutStone(p.x, p.y);
   }
 
   @Override
@@ -201,16 +216,8 @@ public class Board implements IBoard {
     return (0 <= p.x && p.x < columns()) && (0 <= p.y && p.y < rows());
   }
 
-  private Stone getStone(Point p) {
-    return getStone(p.x, p.y);
-  }
-
   private void setStone(Point p, Stone stone) {
     this.board[p.y][p.x] = Objects.requireNonNull(stone);
-  }
-
-  private void putStone(Point p) {
-    putStone(p.x, p.y);
   }
 
   private void flipStone(Point p) {
