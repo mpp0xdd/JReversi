@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import jglib.util.GameUtilities;
-import jreversi.common.BoardObserver;
 import jreversi.common.BotBase;
 import jreversi.common.IBoard;
 import jreversi.common.ITranscript.IRecord;
@@ -35,8 +34,8 @@ public class Bot extends BotBase {
 
   private PointsHolder holder;
 
-  public Bot(IBoard board, BoardObserver observer, Stone stone) {
-    super(board, observer, stone);
+  public Bot(IBoard board, Stone stone) {
+    super(board, stone);
     this.holder = new PointsHolder(board);
   }
 
@@ -50,6 +49,7 @@ public class Bot extends BotBase {
       return;
     }
 
+    sleep();
     pointStream()
         .filter(board()::canPutStone)
         .map(this::getLatestRecord)
@@ -58,18 +58,18 @@ public class Bot extends BotBase {
         .ifPresent(board()::putStone);
   }
 
+  private void sleep() {
+    GameUtilities.sleep(500);
+  }
+
   private Stream<Point> pointStream() {
     return holder.stream();
   }
 
   private IRecord getLatestRecord(Point point) {
     board().putStone(point);
-    observer().ifPresent(BoardObserver::boardUpdate);
-    GameUtilities.sleep(20);
     IRecord latest = board().transcript().latest();
     board().undo();
-    observer().ifPresent(BoardObserver::boardUpdate);
-    GameUtilities.sleep(20);
     return latest;
   }
 
