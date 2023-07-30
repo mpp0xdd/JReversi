@@ -39,7 +39,7 @@ public class MainScreen extends GameScreen implements MouseListener {
     handleYourTurn(e);
     paintImmediately(statusBar, board);
 
-    bot.compute();
+    handleBotTurn();
     paintImmediately(statusBar, board);
   }
 
@@ -54,6 +54,13 @@ public class MainScreen extends GameScreen implements MouseListener {
     int cx = (e.getX() - board.getLocation().x) / board.squareSize();
     int cy = (e.getY() - board.getLocation().y) / board.squareSize();
     board.putStone(cx, cy);
+  }
+
+  private void handleBotTurn() {
+    while (board.currentStone() == bot.stone() && !board.isGameOver()) {
+      bot.compute();
+      paintImmediately(statusBar, board);
+    }
   }
 
   private void paintImmediately(Rectangular... rectangulars) {
