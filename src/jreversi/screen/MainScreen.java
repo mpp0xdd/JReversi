@@ -28,7 +28,7 @@ public class MainScreen extends GameScreen implements MouseListener {
   }
 
   @Override
-  public void paintComponent(Graphics g) {
+  protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     statusBar.draw(g);
     board.draw(g);
