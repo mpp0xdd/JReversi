@@ -10,7 +10,7 @@ import jreversi.common.StatusBarBase;
 import jreversi.common.Stone;
 import jreversi.resource.ColorFactory;
 
-public class StatusBar extends StatusBarBase {
+class StatusBar extends StatusBarBase {
 
   private final Font FONT_OF_CURRENT_STONE = new Font(Font.SANS_SERIF, Font.BOLD, height() - 2);
   private final Font FONT_OF_GAME_STATUS = new Font(Font.SANS_SERIF, Font.ITALIC, height() - 2);

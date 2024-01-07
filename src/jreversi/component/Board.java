@@ -15,7 +15,7 @@ import jreversi.common.ITranscript.IRecord;
 import jreversi.common.Stone;
 import jreversi.resource.ColorFactory;
 
-public class Board implements IBoard {
+class Board implements IBoard {
 
   private boolean isGameOver;
   private final Point point;

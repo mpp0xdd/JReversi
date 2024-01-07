@@ -10,7 +10,7 @@ import jreversi.common.IBoard;
 import jreversi.common.ITranscript.IRecord;
 import jreversi.common.Stone;
 
-public class Bot extends BotBase {
+class Bot extends BotBase {
 
   private final List<Point> points;
 

@@ -9,16 +9,16 @@ import jreversi.common.IBoard;
 import jreversi.common.Rectangular;
 import jreversi.common.StatusBarBase;
 import jreversi.common.Stone;
-import jreversi.component.Board;
-import jreversi.component.Bot;
-import jreversi.component.StatusBar;
+import jreversi.component.BoardFactory;
+import jreversi.component.BotFactory;
+import jreversi.component.StatusBarFactory;
 
 public class MainScreen extends GameScreen implements MouseListener {
 
-  private final IBoard board = new Board();
-  private final StatusBarBase statusBar = new StatusBar(board);
+  private final IBoard board = BoardFactory.create();
+  private final StatusBarBase statusBar = StatusBarFactory.create(board);
   private final Stone yourTurn = Stone.BLACK;
-  private final BotBase bot = new Bot(board, yourTurn.flip());
+  private final BotBase bot = BotFactory.create(board, yourTurn.flip());
 
   public MainScreen() {
     setScreenSize(board.width(), board.height() + statusBar.height());
