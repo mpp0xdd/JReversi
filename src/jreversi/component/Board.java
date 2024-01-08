@@ -279,7 +279,7 @@ class Board implements IBoard {
     if (!points.isEmpty()) {
       board[point.y][point.x] = currentStone();
       points.forEach(this::flipStone);
-      transcript.add(new Transcript.Record(Transcript.Point.from(point), currentStone(), points));
+      transcript.add(Transcript.Record.of(Transcript.Point.from(point), currentStone(), points));
       return true;
     }
     return false;

@@ -105,11 +105,16 @@ class Transcript implements ITranscript {
   }
 
   public static class Record implements IRecord {
+
+    public static Record of(IPoint point, Stone stone, List<IPoint> points) {
+      return new Record(point, stone, points);
+    }
+
     private final IPoint point;
     private final Stone stone;
     private final List<IPoint> points;
 
-    public Record(IPoint point, Stone stone, List<IPoint> points) {
+    private Record(IPoint point, Stone stone, List<IPoint> points) {
       this.point = Objects.requireNonNull(point);
       this.stone = Objects.requireNonNull(stone);
       this.points = Collections.unmodifiableList(points);
