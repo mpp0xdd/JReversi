@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import jglib.util.GameUtilities;
 import jreversi.common.BotBase;
 import jreversi.common.IBoard;
+import jreversi.common.ITranscript.IPoint;
 import jreversi.common.ITranscript.IRecord;
 import jreversi.common.Stone;
 
@@ -39,7 +40,7 @@ class Bot extends BotBase {
         .filter(board()::canPutStone)
         .map(this::getLatestRecord)
         .min(this::compare)
-        .map(IRecord::point)
+        .map(this::toPoint)
         .ifPresent(board()::putStone);
   }
 
@@ -56,6 +57,11 @@ class Bot extends BotBase {
     IRecord latest = board().transcript().latest();
     board().undo();
     return latest;
+  }
+
+  private Point toPoint(IRecord r) {
+    IPoint p = r.point();
+    return new Point(p.x(), p.y());
   }
 
   private int compare(IRecord r1, IRecord r2) {

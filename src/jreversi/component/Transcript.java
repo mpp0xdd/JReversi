@@ -1,6 +1,5 @@
 package jreversi.component;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -61,20 +60,64 @@ class Transcript implements ITranscript {
     transcript.clear();
   }
 
-  public static class Record implements IRecord {
-    private final Point point;
-    private final Stone stone;
-    private final List<Point> points;
+  public static class Point implements IPoint {
 
-    public Record(Point point, Stone stone, List<Point> points) {
-      this.point = Objects.requireNonNull(point).getLocation();
+    public static Point from(java.awt.Point point) {
+      return new Point(point.x, point.y);
+    }
+
+    private final int x;
+    private final int y;
+
+    private Point(int x, int y) {
+      this.x = x;
+      this.y = y;
+    }
+
+    @Override
+    public int x() {
+      return x;
+    }
+
+    @Override
+    public int y() {
+      return y;
+    }
+
+    @Override
+    public String toString() {
+      return "Point [x=" + x + ", y=" + y + "]";
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(x, y);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) return true;
+      if (obj == null) return false;
+      if (getClass() != obj.getClass()) return false;
+      Point other = (Point) obj;
+      return x == other.x && y == other.y;
+    }
+  }
+
+  public static class Record implements IRecord {
+    private final IPoint point;
+    private final Stone stone;
+    private final List<IPoint> points;
+
+    public Record(IPoint point, Stone stone, List<IPoint> points) {
+      this.point = Objects.requireNonNull(point);
       this.stone = Objects.requireNonNull(stone);
       this.points = Collections.unmodifiableList(points);
     }
 
     @Override
-    public Point point() {
-      return point.getLocation();
+    public IPoint point() {
+      return point;
     }
 
     @Override
@@ -83,18 +126,18 @@ class Transcript implements ITranscript {
     }
 
     @Override
-    public List<Point> points() {
+    public List<IPoint> points() {
       return points;
     }
 
     @Override
     public String toString() {
-      return String.format("(%s,%s,%s) %s", point.x, point.y, stone.name(), points);
+      return String.format("(%s,%s,%s) %s", point.x(), point.y(), stone.name(), points);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(point, stone, points);
+      return Objects.hash(point, points, stone);
     }
 
     @Override
@@ -104,8 +147,8 @@ class Transcript implements ITranscript {
       if (getClass() != obj.getClass()) return false;
       Record other = (Record) obj;
       return Objects.equals(point, other.point)
-          && stone == other.stone
-          && Objects.equals(points, other.points);
+          && Objects.equals(points, other.points)
+          && stone == other.stone;
     }
   }
 }

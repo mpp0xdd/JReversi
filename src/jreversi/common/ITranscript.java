@@ -1,6 +1,5 @@
 package jreversi.common;
 
-import java.awt.Point;
 import java.util.List;
 
 public interface ITranscript {
@@ -17,12 +16,27 @@ public interface ITranscript {
 
   boolean isEmpty();
 
+  interface IPoint {
+    int x();
+
+    int y();
+
+    @Override
+    String toString();
+
+    @Override
+    int hashCode();
+
+    @Override
+    boolean equals(Object obj);
+  }
+
   interface IRecord {
-    Point point();
+    IPoint point();
 
     Stone stone();
 
-    List<Point> points();
+    List<IPoint> points();
 
     @Override
     String toString();

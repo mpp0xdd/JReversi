@@ -227,12 +227,20 @@ class Board implements IBoard {
     return (0 <= p.x && p.x < columns()) && (0 <= p.y && p.y < rows());
   }
 
-  private void setStone(Point p, Stone stone) {
-    this.board[p.y][p.x] = Objects.requireNonNull(stone);
+  private Stone getStone(ITranscript.IPoint p) {
+    return getStone(p.x(), p.y());
   }
 
-  private void flipStone(Point p) {
-    this.board[p.y][p.x] = getStone(p).flip();
+  private void setStone(ITranscript.IPoint p, Stone stone) {
+    this.board[p.y()][p.x()] = Objects.requireNonNull(stone);
+  }
+
+  private void flipStone(ITranscript.IPoint p) {
+    this.board[p.y()][p.x()] = getStone(p).flip();
+  }
+
+  private void putStone(ITranscript.IPoint p) {
+    putStone(p.x(), p.y());
   }
 
   private boolean putStoneImpl(Point point, boolean putStone) {
@@ -240,7 +248,7 @@ class Board implements IBoard {
       return false;
     }
 
-    List<Point> points = new ArrayList<>();
+    List<ITranscript.IPoint> points = new ArrayList<>();
     for (Direction d : Direction.values()) {
       Point cursor = new Point(point.x + d.X, point.y + d.Y);
       if (!isInRange(cursor)) {
@@ -262,7 +270,7 @@ class Board implements IBoard {
         }
 
         for (cursor.translate(-d.X, -d.Y); !cursor.equals(point); cursor.translate(-d.X, -d.Y)) {
-          points.add(cursor.getLocation());
+          points.add(Transcript.Point.from(cursor));
         }
         break;
       }
@@ -271,7 +279,7 @@ class Board implements IBoard {
     if (!points.isEmpty()) {
       board[point.y][point.x] = currentStone();
       points.forEach(this::flipStone);
-      transcript.add(new Transcript.Record(point, currentStone(), points));
+      transcript.add(new Transcript.Record(Transcript.Point.from(point), currentStone(), points));
       return true;
     }
     return false;
