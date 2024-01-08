@@ -76,7 +76,6 @@ class Board implements IBoard {
 
     this.transcript.clear();
 
-    // Initialize turn.
     this.currentStone = Stone.BLACK;
   }
 
