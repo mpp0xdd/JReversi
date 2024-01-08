@@ -137,7 +137,7 @@ class Transcript implements ITranscript {
 
     @Override
     public String toString() {
-      return String.format("(%s,%s,%s) %s", point.x(), point.y(), stone.name(), points);
+      return "Record [point=" + point + ", stone=" + stone + ", points=" + points + "]";
     }
 
     @Override
