@@ -17,7 +17,7 @@ public interface ITranscript {
 
   boolean isEmpty();
 
-  public interface IRecord {
+  interface IRecord {
     Point point();
 
     Stone stone();
