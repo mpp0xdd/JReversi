@@ -21,7 +21,7 @@ public class MainScreen extends GameScreen implements MouseListener {
   private final BotBase bot = BotFactory.create(board, yourTurn.flip());
 
   public MainScreen() {
-    setScreenSize(board.width(), board.height() + statusBar.height());
+    setScreenSize(board.width(), statusBar.height() + board.height());
     addMouseListener(this);
     statusBar.setLocation(0, 0);
     board.setLocation(0, statusBar.height());
