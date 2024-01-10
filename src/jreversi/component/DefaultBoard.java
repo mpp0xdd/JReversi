@@ -8,34 +8,34 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 import java.util.Objects;
+import jreversi.common.Board;
 import jreversi.common.Direction;
-import jreversi.common.IBoard;
-import jreversi.common.ITranscript;
-import jreversi.common.ITranscript.IRecord;
 import jreversi.common.Stone;
+import jreversi.common.Transcript;
+import jreversi.common.Transcript.Record;
 import jreversi.resource.ColorFactory;
 
-class Board implements IBoard {
+class DefaultBoard implements Board {
 
   private boolean isGameOver;
   private final Point point;
   private final Stone[][] board;
-  private final Transcript transcript;
-  private final Deque<IRecord> undoRecords;
+  private final DefaultTranscript transcript;
+  private final Deque<Record> undoRecords;
   private boolean redoable;
   private Stone currentStone;
 
-  public Board(int x, int y) {
+  public DefaultBoard(int x, int y) {
     this.isGameOver = false;
     this.point = new Point(x, y);
     this.board = new Stone[rows()][columns()];
-    this.transcript = new Transcript();
+    this.transcript = new DefaultTranscript();
     this.undoRecords = new ArrayDeque<>();
     this.redoable = false;
     init();
   }
 
-  public Board() {
+  public DefaultBoard() {
     this(0, 0);
   }
 
@@ -85,7 +85,7 @@ class Board implements IBoard {
       return;
     }
 
-    IRecord latest = transcript.latest();
+    Record latest = transcript.latest();
     setStone(latest.point(), Stone.NONE);
     this.currentStone = latest.stone();
     latest.points().forEach(this::flipStone);
@@ -103,7 +103,7 @@ class Board implements IBoard {
   @Override
   public void redo() {
     if (redoable) {
-      IRecord undoRecord = undoRecords.removeFirst();
+      Record undoRecord = undoRecords.removeFirst();
       currentStone = undoRecord.stone();
       putStone(undoRecord.point());
       redoable = !undoRecords.isEmpty();
@@ -116,7 +116,7 @@ class Board implements IBoard {
   }
 
   @Override
-  public ITranscript transcript() {
+  public Transcript transcript() {
     return transcript;
   }
 
@@ -227,19 +227,19 @@ class Board implements IBoard {
     return (0 <= p.x && p.x < columns()) && (0 <= p.y && p.y < rows());
   }
 
-  private Stone getStone(ITranscript.IPoint p) {
+  private Stone getStone(Transcript.Point p) {
     return getStone(p.x(), p.y());
   }
 
-  private void setStone(ITranscript.IPoint p, Stone stone) {
+  private void setStone(Transcript.Point p, Stone stone) {
     this.board[p.y()][p.x()] = Objects.requireNonNull(stone);
   }
 
-  private void flipStone(ITranscript.IPoint p) {
+  private void flipStone(Transcript.Point p) {
     this.board[p.y()][p.x()] = getStone(p).flip();
   }
 
-  private void putStone(ITranscript.IPoint p) {
+  private void putStone(Transcript.Point p) {
     putStone(p.x(), p.y());
   }
 
@@ -248,7 +248,7 @@ class Board implements IBoard {
       return false;
     }
 
-    List<ITranscript.IPoint> points = new ArrayList<>();
+    List<Transcript.Point> points = new ArrayList<>();
     for (Direction d : Direction.values()) {
       Point cursor = new Point(point.x + d.X, point.y + d.Y);
       if (!isInRange(cursor)) {
@@ -270,7 +270,7 @@ class Board implements IBoard {
         }
 
         for (cursor.translate(-d.X, -d.Y); !cursor.equals(point); cursor.translate(-d.X, -d.Y)) {
-          points.add(Transcript.Point.from(cursor));
+          points.add(DefaultTranscript.DefaultPoint.from(cursor));
         }
         break;
       }
@@ -279,7 +279,9 @@ class Board implements IBoard {
     if (!points.isEmpty()) {
       board[point.y][point.x] = currentStone();
       points.forEach(this::flipStone);
-      transcript.add(Transcript.Record.of(Transcript.Point.from(point), currentStone(), points));
+      transcript.add(
+          DefaultTranscript.DefaultRecord.of(
+              DefaultTranscript.DefaultPoint.from(point), currentStone(), points));
       return true;
     }
     return false;

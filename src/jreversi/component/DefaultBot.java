@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import jglib.util.GameUtilities;
+import jreversi.common.Board;
 import jreversi.common.Bot;
-import jreversi.common.IBoard;
-import jreversi.common.ITranscript.IPoint;
-import jreversi.common.ITranscript.IRecord;
 import jreversi.common.Stone;
+import jreversi.common.Transcript;
+import jreversi.common.Transcript.Record;
 
 class DefaultBot extends Bot {
 
   private final List<Point> points;
 
-  public DefaultBot(IBoard board, Stone stone) {
+  public DefaultBot(Board board, Stone stone) {
     super(board, stone);
     this.points = new ArrayList<>();
     for (int y = 0; y < board.rows(); y++) {
@@ -40,7 +40,7 @@ class DefaultBot extends Bot {
         .filter(board()::canPutStone)
         .map(this::getLatestRecord)
         .min(this::compare)
-        .map(this::toPoint)
+        .map(this::toAWTPoint)
         .ifPresent(board()::putStone);
   }
 
@@ -52,19 +52,19 @@ class DefaultBot extends Bot {
     return this.points.stream();
   }
 
-  private IRecord getLatestRecord(Point point) {
+  private Record getLatestRecord(Point point) {
     board().putStone(point);
-    IRecord latest = board().transcript().latest();
+    Record latest = board().transcript().latest();
     board().undo();
     return latest;
   }
 
-  private Point toPoint(IRecord r) {
-    IPoint p = r.point();
+  private Point toAWTPoint(Record r) {
+    Transcript.Point p = r.point();
     return new Point(p.x(), p.y());
   }
 
-  private int compare(IRecord r1, IRecord r2) {
+  private int compare(Record r1, Record r2) {
     return r1.points().size() - r2.points().size();
   }
 }

@@ -3,7 +3,7 @@ package jreversi.common;
 import java.awt.Graphics;
 import java.awt.Point;
 
-public interface IBoard extends Locatable, Rectangular {
+public interface Board extends Locatable, Rectangular {
 
   int squareSize();
 
@@ -29,7 +29,7 @@ public interface IBoard extends Locatable, Rectangular {
 
   boolean isGameOver();
 
-  ITranscript transcript();
+  Transcript transcript();
 
   Stone currentStone();
 

@@ -1,6 +1,6 @@
 package jreversi.component;
 
-import jreversi.common.IBoard;
+import jreversi.common.Board;
 
 public final class BoardFactory {
 
@@ -8,7 +8,7 @@ public final class BoardFactory {
     // restrict instantiation
   }
 
-  public static IBoard create() {
-    return new Board();
+  public static Board create() {
+    return new DefaultBoard();
   }
 }

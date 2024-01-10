@@ -6,10 +6,10 @@ import java.awt.Rectangle;
 import java.util.Objects;
 
 public abstract class StatusBar implements Locatable, Rectangular {
-  protected final IBoard board;
+  protected final Board board;
   private final Point point;
 
-  public StatusBar(IBoard board, Point point) {
+  public StatusBar(Board board, Point point) {
     this.board = Objects.requireNonNull(board);
     this.point = Objects.requireNonNull(point).getLocation();
   }

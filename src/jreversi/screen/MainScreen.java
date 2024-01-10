@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import jglib.component.GameScreen;
 import jreversi.common.Bot;
-import jreversi.common.IBoard;
+import jreversi.common.Board;
 import jreversi.common.Rectangular;
 import jreversi.common.StatusBar;
 import jreversi.common.Stone;
@@ -15,7 +15,7 @@ import jreversi.component.StatusBarFactory;
 
 public class MainScreen extends GameScreen implements MouseListener {
 
-  private final IBoard board = BoardFactory.create();
+  private final Board board = BoardFactory.create();
   private final StatusBar statusBar = StatusBarFactory.create(board);
   private final Stone yourTurn = Stone.BLACK;
   private final Bot bot = BotFactory.create(board, yourTurn.flip());

@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import jglib.util.GameUtilities;
-import jreversi.common.IBoard;
+import jreversi.common.Board;
 import jreversi.common.StatusBar;
 import jreversi.common.Stone;
 import jreversi.resource.ColorFactory;
@@ -16,11 +16,11 @@ class DefaultStatusBar extends StatusBar {
   private final Font FONT_OF_GAME_STATUS = new Font(Font.SANS_SERIF, Font.ITALIC, height() - 2);
   private final Font FONT_OF_COUNT_STONES = new Font(Font.MONOSPACED, Font.BOLD, height() - 2);
 
-  public DefaultStatusBar(IBoard board, Point point) {
+  public DefaultStatusBar(Board board, Point point) {
     super(board, point);
   }
 
-  public DefaultStatusBar(IBoard board) {
+  public DefaultStatusBar(Board board) {
     this(board, new Point());
   }
 

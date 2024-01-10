@@ -4,15 +4,15 @@ import java.util.Objects;
 
 public abstract class Bot {
 
-  private final IBoard board;
+  private final Board board;
   private final Stone stone;
 
-  public Bot(IBoard board, Stone stone) {
+  public Bot(Board board, Stone stone) {
     this.board = Objects.requireNonNull(board);
     this.stone = Objects.requireNonNull(stone);
   }
 
-  public final IBoard board() {
+  public final Board board() {
     return board;
   }
 

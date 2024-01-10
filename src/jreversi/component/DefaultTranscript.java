@@ -4,34 +4,34 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import jreversi.common.ITranscript;
+import jreversi.common.Transcript;
 import jreversi.common.Stone;
 
-class Transcript implements ITranscript {
+class DefaultTranscript implements Transcript {
 
-  private final List<IRecord> transcript;
+  private final List<Record> transcript;
 
-  public Transcript() {
+  public DefaultTranscript() {
     this.transcript = new ArrayList<>();
   }
 
   @Override
-  public List<IRecord> records() {
+  public List<Record> records() {
     return Collections.unmodifiableList(transcript);
   }
 
   @Override
-  public IRecord latest() {
+  public Record latest() {
     return transcript.get(transcript.size() - 1);
   }
 
   @Override
-  public IRecord oldest() {
+  public Record oldest() {
     return transcript.get(0);
   }
 
   @Override
-  public IRecord get(int index) {
+  public Record get(int index) {
     return transcript.get(index);
   }
 
@@ -45,14 +45,14 @@ class Transcript implements ITranscript {
     return transcript.isEmpty();
   }
 
-  public void add(IRecord record) {
+  public void add(Record record) {
     if (transcript.contains(record)) {
       return;
     }
     transcript.add(record);
   }
 
-  public boolean remove(IRecord record) {
+  public boolean remove(Record record) {
     return transcript.remove(record);
   }
 
@@ -60,16 +60,16 @@ class Transcript implements ITranscript {
     transcript.clear();
   }
 
-  public static class Point implements IPoint {
+  public static class DefaultPoint implements Point {
 
-    public static Point from(java.awt.Point point) {
-      return new Point(point.x, point.y);
+    public static DefaultPoint from(java.awt.Point point) {
+      return new DefaultPoint(point.x, point.y);
     }
 
     private final int x;
     private final int y;
 
-    private Point(int x, int y) {
+    private DefaultPoint(int x, int y) {
       this.x = x;
       this.y = y;
     }
@@ -99,29 +99,29 @@ class Transcript implements ITranscript {
       if (this == obj) return true;
       if (obj == null) return false;
       if (getClass() != obj.getClass()) return false;
-      Point other = (Point) obj;
+      DefaultPoint other = (DefaultPoint) obj;
       return x == other.x && y == other.y;
     }
   }
 
-  public static class Record implements IRecord {
+  public static class DefaultRecord implements Record {
 
-    public static Record of(IPoint point, Stone stone, List<IPoint> points) {
-      return new Record(point, stone, points);
+    public static DefaultRecord of(Point point, Stone stone, List<Point> points) {
+      return new DefaultRecord(point, stone, points);
     }
 
-    private final IPoint point;
+    private final Point point;
     private final Stone stone;
-    private final List<IPoint> points;
+    private final List<Point> points;
 
-    private Record(IPoint point, Stone stone, List<IPoint> points) {
+    private DefaultRecord(Point point, Stone stone, List<Point> points) {
       this.point = Objects.requireNonNull(point);
       this.stone = Objects.requireNonNull(stone);
       this.points = Collections.unmodifiableList(points);
     }
 
     @Override
-    public IPoint point() {
+    public Point point() {
       return point;
     }
 
@@ -131,7 +131,7 @@ class Transcript implements ITranscript {
     }
 
     @Override
-    public List<IPoint> points() {
+    public List<Point> points() {
       return points;
     }
 
@@ -150,7 +150,7 @@ class Transcript implements ITranscript {
       if (this == obj) return true;
       if (obj == null) return false;
       if (getClass() != obj.getClass()) return false;
-      Record other = (Record) obj;
+      DefaultRecord other = (DefaultRecord) obj;
       return Objects.equals(point, other.point)
           && Objects.equals(points, other.points)
           && stone == other.stone;

@@ -2,21 +2,21 @@ package jreversi.common;
 
 import java.util.List;
 
-public interface ITranscript {
+public interface Transcript {
 
-  List<IRecord> records();
+  List<Record> records();
 
-  IRecord latest();
+  Record latest();
 
-  IRecord oldest();
+  Record oldest();
 
-  IRecord get(int index);
+  Record get(int index);
 
   int size();
 
   boolean isEmpty();
 
-  interface IPoint {
+  interface Point {
     int x();
 
     int y();
@@ -31,12 +31,12 @@ public interface ITranscript {
     boolean equals(Object obj);
   }
 
-  interface IRecord {
-    IPoint point();
+  interface Record {
+    Point point();
 
     Stone stone();
 
-    List<IPoint> points();
+    List<Point> points();
 
     @Override
     String toString();
