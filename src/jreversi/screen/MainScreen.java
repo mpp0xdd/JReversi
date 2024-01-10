@@ -4,10 +4,10 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import jglib.component.GameScreen;
-import jreversi.common.BotBase;
+import jreversi.common.Bot;
 import jreversi.common.IBoard;
 import jreversi.common.Rectangular;
-import jreversi.common.StatusBarBase;
+import jreversi.common.StatusBar;
 import jreversi.common.Stone;
 import jreversi.component.BoardFactory;
 import jreversi.component.BotFactory;
@@ -16,9 +16,9 @@ import jreversi.component.StatusBarFactory;
 public class MainScreen extends GameScreen implements MouseListener {
 
   private final IBoard board = BoardFactory.create();
-  private final StatusBarBase statusBar = StatusBarFactory.create(board);
+  private final StatusBar statusBar = StatusBarFactory.create(board);
   private final Stone yourTurn = Stone.BLACK;
-  private final BotBase bot = BotFactory.create(board, yourTurn.flip());
+  private final Bot bot = BotFactory.create(board, yourTurn.flip());
 
   public MainScreen() {
     setScreenSize(board.width(), statusBar.height() + board.height());

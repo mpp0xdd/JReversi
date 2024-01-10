@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import jglib.util.GameUtilities;
-import jreversi.common.BotBase;
+import jreversi.common.Bot;
 import jreversi.common.IBoard;
 import jreversi.common.ITranscript.IPoint;
 import jreversi.common.ITranscript.IRecord;
 import jreversi.common.Stone;
 
-class Bot extends BotBase {
+class DefaultBot extends Bot {
 
   private final List<Point> points;
 
-  public Bot(IBoard board, Stone stone) {
+  public DefaultBot(IBoard board, Stone stone) {
     super(board, stone);
     this.points = new ArrayList<>();
     for (int y = 0; y < board.rows(); y++) {

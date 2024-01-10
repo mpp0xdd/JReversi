@@ -1,7 +1,7 @@
 package jreversi.component;
 
 import jreversi.common.IBoard;
-import jreversi.common.StatusBarBase;
+import jreversi.common.StatusBar;
 
 public final class StatusBarFactory {
 
@@ -9,7 +9,7 @@ public final class StatusBarFactory {
     // restrict instantiation
   }
 
-  public static StatusBarBase create(IBoard board) {
-    return new StatusBar(board);
+  public static StatusBar create(IBoard board) {
+    return new DefaultStatusBar(board);
   }
 }

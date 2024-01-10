@@ -1,6 +1,6 @@
 package jreversi.component;
 
-import jreversi.common.BotBase;
+import jreversi.common.Bot;
 import jreversi.common.IBoard;
 import jreversi.common.Stone;
 
@@ -10,7 +10,7 @@ public final class BotFactory {
     // restrict instantiation
   }
 
-  public static BotBase create(IBoard board, Stone stone) {
-    return new Bot(board, stone);
+  public static Bot create(IBoard board, Stone stone) {
+    return new DefaultBot(board, stone);
   }
 }
