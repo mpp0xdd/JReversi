@@ -47,7 +47,7 @@ public interface Board extends Locatable, Rectangular {
 
   boolean canPutStone();
 
-  int countStones(Stone stone);
+  int count(Stone stone);
 
   void draw(Graphics g);
 }

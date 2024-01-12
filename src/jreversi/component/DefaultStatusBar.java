@@ -62,8 +62,8 @@ class DefaultStatusBar extends StatusBar {
     g.setColor(ColorFactory.beige());
 
     if (board.isGameOver()) {
-      int numOfBlack = board.countStones(Stone.BLACK);
-      int numOfWhite = board.countStones(Stone.WHITE);
+      int numOfBlack = board.count(Stone.BLACK);
+      int numOfWhite = board.count(Stone.WHITE);
       String result;
       if (numOfBlack > numOfWhite) {
         result = "Black wins!";
@@ -91,6 +91,6 @@ class DefaultStatusBar extends StatusBar {
         g,
         getLocation().x + width(),
         getLocation().y,
-        String.format("B:%s W:%s", board.countStones(Stone.BLACK), board.countStones(Stone.WHITE)));
+        String.format("B:%s W:%s", board.count(Stone.BLACK), board.count(Stone.WHITE)));
   }
 }
