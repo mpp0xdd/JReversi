@@ -1,11 +1,10 @@
 package jreversi.common;
 
-import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Objects;
 
-public abstract class StatusBar implements Locatable, Rectangular {
+public abstract class StatusBar implements Locatable, Rectangular, Drawable {
   protected final Board board;
   private final Point point;
 
@@ -39,6 +38,4 @@ public abstract class StatusBar implements Locatable, Rectangular {
   }
 
   public abstract int height();
-
-  public abstract void draw(Graphics g);
 }

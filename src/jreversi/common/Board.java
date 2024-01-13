@@ -1,9 +1,8 @@
 package jreversi.common;
 
-import java.awt.Graphics;
 import java.awt.Point;
 
-public interface Board extends Locatable, Rectangular {
+public interface Board extends Locatable, Rectangular, Drawable {
 
   int squareSize();
 
@@ -48,6 +47,4 @@ public interface Board extends Locatable, Rectangular {
   boolean canPutStone();
 
   int count(Stone stone);
-
-  void draw(Graphics g);
 }
