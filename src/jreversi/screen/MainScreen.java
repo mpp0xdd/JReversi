@@ -4,8 +4,8 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import jglib.component.GameScreen;
-import jreversi.common.Bot;
 import jreversi.common.Board;
+import jreversi.common.Bot;
 import jreversi.common.Rectangular;
 import jreversi.common.StatusBar;
 import jreversi.common.Stone;
@@ -32,6 +32,10 @@ public class MainScreen extends GameScreen implements MouseListener {
     super.paintComponent(g);
     statusBar.draw(g);
     board.draw(g);
+
+    if (board.isGameOver()) {
+      board.transcript().records().forEach(System.err::println);
+    }
   }
 
   @Override
