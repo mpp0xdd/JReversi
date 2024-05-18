@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
-import jglib.util.GameUtilities;
+import jglib.util.StringDrawer;
 import jreversi.common.Board;
 import jreversi.common.StatusBar;
 import jreversi.common.Stone;
@@ -54,7 +54,7 @@ class DefaultStatusBar extends StatusBar {
   private void drawCurrentStone(Graphics g) {
     g.setFont(FONT_OF_CURRENT_STONE);
     g.setColor(toColor(board.currentStone()));
-    GameUtilities.drawString(g, getLocation().x, getLocation().y, board.currentStone().name());
+    StringDrawer.LEFT.draw(g, getLocation().x, getLocation().y, board.currentStone().name());
   }
 
   private void drawGameStatus(Graphics g) {
@@ -73,13 +73,13 @@ class DefaultStatusBar extends StatusBar {
         result = "Draw!";
       }
 
-      GameUtilities.drawStringAfterCentering(g, width() / 2, height() / 2, "Game Over! " + result);
+      StringDrawer.CENTER.draw(g, width() / 2, height() / 2, "Game Over! " + result);
       return;
     }
 
     if (board.transcript().size() > 0) {
       if (board.transcript().latest().stone() == board.currentStone()) {
-        GameUtilities.drawStringAfterCentering(g, width() / 2, height() / 2, "PASS");
+        StringDrawer.CENTER.draw(g, width() / 2, height() / 2, "PASS");
       }
     }
   }
@@ -87,7 +87,7 @@ class DefaultStatusBar extends StatusBar {
   private void drawCountStones(Graphics g) {
     g.setFont(FONT_OF_COUNT_STONES);
     g.setColor(ColorFactory.beige());
-    GameUtilities.drawStringFromTopRight(
+    StringDrawer.RIGHT.draw(
         g,
         getLocation().x + width(),
         getLocation().y,
