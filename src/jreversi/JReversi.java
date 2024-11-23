@@ -1,8 +1,8 @@
 package jreversi;
 
 import jglib.base.Game;
-import jglib.component.GameScreen;
 import jglib.component.GameWindow;
+import jglib.component.SimpleGameScreen;
 import jreversi.screen.MainScreen;
 
 public class JReversi extends Game {
@@ -14,7 +14,7 @@ public class JReversi extends Game {
   @Override
   protected void start() {
     GameWindow window = new GameWindow("JReversi");
-    GameScreen screen = new MainScreen();
+    SimpleGameScreen screen = new MainScreen();
 
     window.switchGameScreen(screen);
     window.setVisible(true);

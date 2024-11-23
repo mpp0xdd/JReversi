@@ -3,7 +3,7 @@ package jreversi.screen;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import jglib.component.GameScreen;
+import jglib.component.SimpleGameScreen;
 import jreversi.common.Board;
 import jreversi.common.Bot;
 import jreversi.common.Rectangular;
@@ -13,7 +13,7 @@ import jreversi.component.BoardFactory;
 import jreversi.component.BotFactory;
 import jreversi.component.StatusBarFactory;
 
-public class MainScreen extends GameScreen implements MouseListener {
+public class MainScreen extends SimpleGameScreen implements MouseListener {
 
   private final Board board = BoardFactory.create();
   private final StatusBar statusBar = StatusBarFactory.create(board);
@@ -71,9 +71,6 @@ public class MainScreen extends GameScreen implements MouseListener {
       paintImmediately(rectangular.asRectangle());
     }
   }
-
-  @Override
-  protected void runGameLoop() {}
 
   @Override
   public void mouseClicked(MouseEvent e) {}
