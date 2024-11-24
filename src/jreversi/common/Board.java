@@ -2,6 +2,7 @@ package jreversi.common;
 
 import java.awt.Point;
 import jglib.util.spec.Drawable;
+import jglib.util.spec.Rectangular;
 
 public interface Board extends Locatable, Rectangular, Drawable {
 
@@ -13,10 +14,12 @@ public interface Board extends Locatable, Rectangular, Drawable {
 
   int columns();
 
+  @Override
   default int width() {
     return columns() * squareSize();
   }
 
+  @Override
   default int height() {
     return rows() * squareSize();
   }

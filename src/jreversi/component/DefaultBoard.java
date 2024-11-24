@@ -40,6 +40,16 @@ class DefaultBoard implements Board {
   }
 
   @Override
+  public int x() {
+    return point.x;
+  }
+
+  @Override
+  public int y() {
+    return point.y;
+  }
+
+  @Override
   public int squareSize() {
     return 70;
   }

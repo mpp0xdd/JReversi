@@ -1,9 +1,9 @@
 package jreversi.common;
 
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.util.Objects;
 import jglib.util.spec.Drawable;
+import jglib.util.spec.Rectangular;
 
 public abstract class StatusBar implements Locatable, Rectangular, Drawable {
   protected final Board board;
@@ -30,13 +30,20 @@ public abstract class StatusBar implements Locatable, Rectangular, Drawable {
   }
 
   @Override
-  public Rectangle asRectangle() {
-    return new Rectangle(point.x, point.y, width(), height());
-  }
-
   public int width() {
     return board.width();
   }
 
+  @Override
   public abstract int height();
+
+  @Override
+  public int x() {
+    return point.x;
+  }
+
+  @Override
+  public int y() {
+    return point.y;
+  }
 }
