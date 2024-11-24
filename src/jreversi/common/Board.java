@@ -1,6 +1,7 @@
 package jreversi.common;
 
 import java.awt.Point;
+import jglib.util.spec.Drawable;
 
 public interface Board extends Locatable, Rectangular, Drawable {
 

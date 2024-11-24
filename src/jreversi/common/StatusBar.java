@@ -3,6 +3,7 @@ package jreversi.common;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Objects;
+import jglib.util.spec.Drawable;
 
 public abstract class StatusBar implements Locatable, Rectangular, Drawable {
   protected final Board board;
