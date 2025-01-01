@@ -1,8 +1,8 @@
 package jreversi;
 
-import jglib.component.GameWindow;
-import jglib.component.SimpleGameScreen;
 import jglib.core.Game;
+import jglib.screen.GameWindow;
+import jglib.screen.SimpleGameScreen;
 import jreversi.screen.MainScreen;
 
 public class JReversi extends Game {

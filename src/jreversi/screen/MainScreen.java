@@ -3,7 +3,7 @@ package jreversi.screen;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import jglib.component.SimpleGameScreen;
+import jglib.screen.SimpleGameScreen;
 import jglib.util.spec.Rectangular;
 import jreversi.common.Board;
 import jreversi.common.Bot;
